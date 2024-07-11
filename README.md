@@ -9,7 +9,6 @@
 - Apache
 - Node.js
 - NPM
-- Laravel
 
 ### Installation
 1. Clone the repository
