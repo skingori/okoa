@@ -12,7 +12,7 @@
     <title>Okoa::login</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -41,14 +41,25 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user">
+                                    <?php
+                                    session_start();
+                                    if (isset($_SESSION['error'])) {
+                                        echo "<div class='alert alert-danger'>" . $_SESSION['error'] . "</div>";
+                                        unset($_SESSION['error']);
+                                    }
+                                    if (isset($_SESSION['success'])) {
+                                        echo "<div class='alert alert-success'>" . $_SESSION['success'] . "</div>";
+                                        unset($_SESSION['success']);
+                                    }
+                                        ?>
+                                    <form class="user" method="POST" action="actions/loginAction.php">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
+                                            <input type="email" name="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="Enter Email Address...">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
+                                            <input type="password" name="password" class="form-control form-control-user"
                                                 id="exampleInputPassword" placeholder="Password">
                                         </div>
                                         <div class="form-group">
@@ -58,9 +69,9 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <a href="user/home.php" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Login
-                                        </a>
+                                        </button>
                                         <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
