@@ -5,8 +5,8 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
-include('header.php');
 include('controler/getExpenses.php');
+include('header.php');
 ?>
 
 <!-- Begin Page Content -->
@@ -25,6 +25,10 @@ include('controler/getExpenses.php');
                             </a>
                         </div>
                         <div class="card-body">
+                            <!-- message -->
+                            <?php
+                            include('message.php');
+                            ?>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
@@ -57,10 +61,10 @@ include('controler/getExpenses.php');
                                                 echo "<td>" . $expense['budget_amount'] . "</td>";
                                                 echo "<td>" . $expense['expense_created_at'] . "</td>";
                                                 echo "<td>
-                                                <a href='editExpense.php?id=" . $expense['id'] . "' class='btn btn-info btn-circle'>
+                                                <a href='editExpense.php?expenseID=" . $expense['id'] . "' class='btn btn-info btn-circle'>
                                                     <i class='fas fa-info-circle'></i>
                                                 </a>
-                                                <a href='controler/deleteExpense.php?id=" . $expense['id'] . "' class='btn btn-danger btn-circle'>
+                                                <a href='delete.php?expenseID=" . $expense['id'] . "' class='btn btn-danger btn-circle'>
                                                     <i class='fas fa-trash'></i>
                                                 </a>
                                             </td>";

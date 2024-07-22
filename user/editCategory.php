@@ -5,7 +5,7 @@ if (!isset($_SESSION['email'])) {
     header('Location: ../sessions.php');
     exit();
 }
-
+include('controler/getValuesById.php');
 include('controler/addEditCategories.php');
 include('controler/getCategoryEnums.php');
 
@@ -15,7 +15,7 @@ include('header.php');
 <!-- Begin Page Content -->
 <div class="card shadow mb-4">
     <div class="card-header py-3 card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Categories</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Edit Categories</h6>
     </div>
     <div class="card-body">
         <?php
@@ -31,10 +31,11 @@ include('header.php');
         <form class="user" method="POST" action="">
             <div class="form-group row">
                 <div class="col-sm-5 mb-3 mb-sm-0">
-                    <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Category name" required>
+                    
+                    <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Category name" value="<?php echo $categoryName ?>" required>
                 </div>
                 <div class="col-sm-3 mb-3 mb-sm-0">
-                    <input type="number" class="form-control" name="category_estimated_amount" id="category_estimated_amount" placeholder="Amount" required>
+                    <input type="number" class="form-control" name="category_estimated_amount" id="category_estimated_amount" placeholder="Amount" value="<?php echo $categoryEstimatedAmount ?>" required>
                 </div>
                 <div class="col-sm-4">
                     <select class="form-control custom-select" name="category_occurence" id="category_occurence" required>
@@ -59,15 +60,15 @@ include('header.php');
                     </select>
                 </div>
                 <div class="col-sm-7">
-                    <input type="date" class="form-control" name="reminder_date" id="reminder_date" placeholder="Reminder date" required>
+                    <input type="date" class="form-control" name="reminder_date" id="reminder_date" placeholder="Reminder date" value="<?php echo $reminderDate ?>" required>
                 </div>
             </div>
             <div class="form-group">
                 <!-- Description -->
-                <textarea class="form-control" name="category_description" id="category_description" placeholder="Description" required></textarea>
+                <textarea class="form-control" name="category_description" id="category_description" placeholder="Description" required><?php echo $categoryDescription ?></textarea>
             </div>
 
-            <button type="submit" name="add" class="btn btn-success">Add Category</button>
+            <button type="submit" name="edit" class="btn btn-success">Update Category</button>
         </form>
     </div>
 </div>

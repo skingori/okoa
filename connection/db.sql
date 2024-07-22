@@ -40,6 +40,7 @@ CREATE TABLE budget(
     budget_expire_date DATE NULL,
     budget_description TEXT NULL,
     budget_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(budget_user_id) REFERENCES users(id)
 );
 
@@ -47,13 +48,16 @@ CREATE TABLE budget(
 
 CREATE TABLE categories(
     id INT AUTO_INCREMENT PRIMARY KEY,
+    category_user_id INT NOT NULL,
     category_name VARCHAR(100) NOT NULL,
     category_estimated_amount DECIMAL(10, 2) NOT NULL,
     category_occurence ENUM('daily', 'weekly', 'monthly', 'yearly') NOT NULL,
     category_status ENUM('active', 'inactive') NOT NULL,
     reminder_date DATE NULL,
     category_description TEXT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(category_user_id) REFERENCES users(id),
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -68,6 +72,7 @@ CREATE TABLE expenses(
     expense_budget_id INT NOT NULL,
     expense_description TEXT NOT NULL,
     expense_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(expense_user_id) REFERENCES users(id),
     FOREIGN KEY(expense_budget_id) REFERENCES budget(id)
 );

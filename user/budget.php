@@ -18,6 +18,17 @@ include('controler/getBudget.php');
                             </a>
                         </div>
                         <div class="card-body">
+                            <!-- message -->
+                            <?php
+                            if (isset($_SESSION['message'])) {
+                                echo "<div class='alert alert-" . $_SESSION['message_type'] . " alert-dismissible'>
+                                <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                                " . $_SESSION['message'] . "
+                                </div>";
+                                unset($_SESSION['message']);
+                                unset($_SESSION['message_type']);
+                            }
+                            ?>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
@@ -54,7 +65,7 @@ include('controler/getBudget.php');
                                                 <a href='editBudget.php?id=" . $budget['id'] . "' class='btn btn-info btn-circle'>
                                                     <i class='fas fa-info-circle'></i>
                                                 </a>
-                                                <a href='controler/deleteBudget.php?id=" . $budget['id'] . "' class='btn btn-danger btn-circle'>
+                                                <a href='delete.php?budgetID=" . $budget['id'] . "' class='btn btn-danger btn-circle'>
                                                     <i class='fas fa-trash'></i>
                                                 </a>
                                             </td>";

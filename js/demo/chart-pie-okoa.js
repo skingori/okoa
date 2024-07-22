@@ -1,3 +1,5 @@
+const { Callbacks } = require("jquery");
+
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
@@ -26,6 +28,13 @@ var myPieChart = new Chart(ctx, {
       yPadding: 15,
       displayColors: false,
       caretPadding: 10,
+      Callbacks: {
+        label: function(tooltipItem, data) {
+          var dataset = data.datasets[tooltipItem.datasetIndex];
+          var percent = Math.round((dataset.data[tooltipItem.index] / dataset._meta[0].total) * 100);
+          return dataset.data[tooltipItem.index] + ' (' + percent + '%)';
+        }
+      }
     },
     legend: {
       display: false

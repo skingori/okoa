@@ -18,6 +18,10 @@ include('controler/getCategories.php');
                             </a>
                         </div>
                         <div class="card-body">
+                            <!-- message -->
+                            <?php
+                            include('message.php');
+                            ?>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
@@ -50,10 +54,10 @@ include('controler/getCategories.php');
                                                 echo "<td>" . $category['category_status'] . "</td>";
                                                 echo "<td>" . $category['reminder_date'] . "</td>";
                                                 echo "<td>
-                                                <a href='editCategory.php?id=" . $category['id'] . "' class='btn btn-info btn-circle'>
+                                                <a href='editCategory.php?categoryID=" . $category['id'] . "' class='btn btn-info btn-circle'>
                                                     <i class='fas fa-info-circle'></i>
                                                 </a>
-                                                <a href='controler/deleteCategory.php?id=" . $category['id'] . "' class='btn btn-danger btn-circle'>
+                                                <a href='delete.php?categoryID=" . $category['id'] . "' class='btn btn-danger btn-circle'>
                                                     <i class='fas fa-trash'></i>
                                                 </a>
                                             </td>";

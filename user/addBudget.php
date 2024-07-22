@@ -26,15 +26,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addBudget'])) {
         if ($insert) {
             $_SESSION['message'] = "Budget added successfully";
             $_SESSION['message_type'] = "success";
-
-            echo "Budget added successfully";
             // header('Location: budget.php');
 
         } else {
             $_SESSION['message'] = "An error occurred. Please try again";
             $_SESSION['message_type'] = "error";
-
-            echo "An error occurred. Please try again";
             // header('Location: addBudget.php');
         }
     }
@@ -47,6 +43,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addBudget'])) {
             <h6 class="m-0 font-weight-bold text-primary">Budget</h6>
         </div>
         <div class="card-body">
+            <?php
+            if (isset($_SESSION['message'])) {
+                echo "<div class='alert alert-" . $_SESSION['message_type'] . " alert-dismissible'>
+                <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                " . $_SESSION['message'] . "
+                </div>";
+                unset($_SESSION['message']);
+                unset($_SESSION['message_type']);
+            }
+            ?>
             <form class="user" method="POST" action="">
                 <div class="form-group row">
                     <div class="col-sm-5 mb-3 mb-sm-0">
