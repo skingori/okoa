@@ -23,7 +23,7 @@ CREATE TABLE profile(
     phone VARCHAR(100) NOT NULL,
     address VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(user_id) REFERENCES users(id)
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 
@@ -41,7 +41,7 @@ CREATE TABLE budget(
     budget_description TEXT NULL,
     budget_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(budget_user_id) REFERENCES users(id)
+    FOREIGN KEY(budget_user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- CREATE TABLE items category
@@ -56,7 +56,7 @@ CREATE TABLE categories(
     reminder_date DATE NULL,
     category_description TEXT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(category_user_id) REFERENCES users(id),
+    FOREIGN KEY(category_user_id) REFERENCES users(id) ON DELETE CASCADE,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -73,8 +73,8 @@ CREATE TABLE expenses(
     expense_description TEXT NOT NULL,
     expense_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(expense_user_id) REFERENCES users(id),
-    FOREIGN KEY(expense_budget_id) REFERENCES budget(id)
+    FOREIGN KEY(expense_user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY(expense_budget_id) REFERENCES budget(id) ON DELETE CASCADE
 );
 
 -- CREATE TABLE user income
@@ -102,4 +102,15 @@ CREATE TABLE reminders(
     reminder_message TEXT NULL,
     reminder_description TEXT NOT NULL,
     reminder_date_time DATETIME NOT NULL
+);
+
+-- Reset password table
+
+CREATE TABLE reset_password(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    token VARCHAR(100) NOT NULL,
+    token_status ENUM('active', 'inactive') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );

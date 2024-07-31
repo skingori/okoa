@@ -12,8 +12,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addExpense'])) {
         $expenseBudget = $_POST['budget_id'];
         $expenseDescription = $_POST['expense_description'];
 
-        echo $expenseDescription;
-
         $insert = $con->query("INSERT INTO expenses (expense_user_id, expense_name, expense_amount, expense_category_name, expense_budget_id, expense_description) VALUES ('$expense_user_id', '$expenseName', '$expenseAmount', '$expenseCategory', '$expenseBudget', '$expenseDescription')");
 
         if ($insert) {

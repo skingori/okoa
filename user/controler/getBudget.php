@@ -28,6 +28,8 @@ if ($userId) {
         WHERE b.budget_user_id = $userId;
     ";
     $budgets = $con->query($budgetsQuery)->fetchAll(PDO::FETCH_ASSOC);
+
 } else {
     $budgets = [];
 }
+?>

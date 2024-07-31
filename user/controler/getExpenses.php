@@ -6,7 +6,7 @@
     if ($userId) {
         $expensesQuery = "
         SELECT e.id, e.expense_name, e.expense_amount, e.expense_created_at,
-            e.expense_category_name, b.budget_amount
+            e.expense_category_name, e.expense_description, b.budget_amount
         FROM expenses AS e
         JOIN budget AS b ON e.expense_budget_id = b.id
         WHERE e.expense_user_id = $userId;

@@ -13,9 +13,13 @@ include('controler/getBudget.php');
 <div class="card shadow mb-4">
                         <div class="card-header py-3 card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-primary">Budget</h6>
-                            <a href="addBudget.php" class="btn btn-success btn-circle">
-                                <i class="fas fa-plus"></i>
-                            </a>
+                            <!-- <a href="addBudget.php" class="btn btn-success btn-circle">
+                                
+                            </a> -->
+                            <div class="btn-group" role="group" aria-label="Test">
+  <a href="addBudget.php" class="btn btn-primary btn-circle"><i class="fas fa-plus"></i></a>
+  <a href="addBudget.php" class="btn btn-success btn-circle"><i class="fas fa-print"></i></a>
+</div>
                         </div>
                         <div class="card-body">
                             <!-- message -->
@@ -62,7 +66,7 @@ include('controler/getBudget.php');
                                                 echo "<td>" . $budget['budget_status'] . "</td>";
                                                 echo "<td>" . $budget['budget_expire_date'] . "</td>";
                                                 echo "<td>
-                                                <a href='editBudget.php?id=" . $budget['id'] . "' class='btn btn-info btn-circle'>
+                                                <a href='editBudget.php?budgetID=" . $budget['id'] . "' class='btn btn-info btn-circle'>
                                                     <i class='fas fa-info-circle'></i>
                                                 </a>
                                                 <a href='delete.php?budgetID=" . $budget['id'] . "' class='btn btn-danger btn-circle'>

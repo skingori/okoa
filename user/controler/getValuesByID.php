@@ -34,9 +34,9 @@ if(isset($_GET['budgetID'])){
         FROM budget AS b
         WHERE b.budget_user_id = $userId AND b.id = $budgetID;
     ";
-    $budgets = $con->query($budgetsQuery)->fetchAll(PDO::FETCH_ASSOC);
+    $budgetEditResponse = $con->query($budgetsQuery)->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach ($budgets as $budget) {
+    foreach ($budgetEditResponse as $budget) {
         $budgetName = $budget['budget_name'] ?? '';
         $budgetAmount = $budget['budget_amount'] ?? '';
         $budgetOccurence = $budget['budget_occurence'] ?? '';
@@ -46,7 +46,7 @@ if(isset($_GET['budgetID'])){
         $budgetDescription = $budget['budget_description'] ?? '';
     }
 } else {
-    $budgets = [];
+    $budgetEditResponse = [];
 }
 
 // Get all Categories from the database using the ID from url parameter

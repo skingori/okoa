@@ -6,9 +6,9 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
-include('controler/getBudget.php');
 include('controler/getCategories.php');
 include('controler/addEditExpenses.php');
+include('controler/getBudget.php');
 include('controler/getValuesByID.php');
 include('header.php');
 
