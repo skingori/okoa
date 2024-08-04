@@ -2,13 +2,14 @@
 require_once('../connection/db.php');
 
 if (isset($_POST['getDate'])) {
+    $userId = $con->query("SELECT id FROM users WHERE email = '$_SESSION[email]'")->fetchColumn();
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
 
     $expenseAmountAndMonth = $con->query("
         SELECT SUM(expense_amount) AS amount, MONTH(expense_created_at) AS month
         FROM expenses
-        WHERE expense_created_at BETWEEN '$start_date' AND '$end_date'
+        WHERE expense_created_at BETWEEN '$start_date' AND '$end_date' AND expense_user_id = $userId
         GROUP BY month
     ")->fetchAll(PDO::FETCH_ASSOC);
 

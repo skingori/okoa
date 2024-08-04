@@ -10,8 +10,8 @@ include('controler/getBudget.php');
 // Get categories
 include('controler/getCategories.php');
 // Get expenses
-include('controler/getExpenses.php');
 include('controler/getDynamicChartLabels.php');
+include('controler/getExpenseCustom.php');
 include('header.php');
 ?>
 
@@ -84,15 +84,39 @@ include('header.php');
                     ?>
                 <tr>
                     <td colspan="4" class="text-end">Total Budget</td>
-                    <td class="text-end">362</td>
+                    <td class="text-end">
+                        <?php
+                        if ($totalBudget < 0) {
+                            echo "<span class='text-danger'>KES $totalBudget</span>";
+                        } else {
+                            echo "<span class='text-success'>KES $totalBudget</span>";
+                        }
+                        ?>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="4" class="text-end">Budget Balance</td>
-                    <td class="text-end">15</td>
+                    <td class="text-end">
+                        <?php
+                        if ($totalRemainingBudget < 0) {
+                            echo "<span class='text-danger'>KES $totalRemainingBudget</span>";
+                        } else {
+                            echo "<span class='text-success'>KES $totalRemainingBudget</span>";
+                        }
+                        ?>
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row" colspan="4" class="text-uppercase text-end">Total Expenses</th>
-                    <td class="text-end">$495.1</td>
+                    <td class="text-end">
+                        <?php
+                        if ($totalExpenses < 0) {
+                            echo "<span class='text-danger'>KES $totalExpenses</span>";
+                        } else {
+                            echo "<span class='text-success'>KES $totalExpenses</span>";
+                        }
+                        ?>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -134,13 +158,23 @@ include('header.php');
     }
     var ctx = document.getElementById("myAreaChart");
     var myLineChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: [<?php echo $chartLabels; ?>],
             datasets: [{
                 label: "Expenses",
                 lineTension: 0.3,
-                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)',
+      'rgba(255, 99, 132, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+    ],
                 borderColor: "rgba(78, 115, 223, 1)",
                 pointRadius: 3,
                 pointBackgroundColor: "rgba(78, 115, 223, 1)",
@@ -188,7 +222,7 @@ include('header.php');
                     gridLines: {
                         color: "rgb(234, 236, 244)",
                         zeroLineColor: "rgb(234, 236, 244)",
-                        drawBorder: false,
+                        drawBorder: true,
                         borderDash: [2],
                         zeroLineBorderDash: [2]
                     }

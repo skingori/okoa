@@ -23,7 +23,7 @@ $userId = $con->query("SELECT id FROM users WHERE email = '$_SESSION[email]'")->
 
 if ($userId) {
     $budgetsQuery = "
-        SELECT b.id, b.budget_name, b.budget_amount, b.budget_occurence, b.budget_status, b.budget_reminder_status, b.budget_expire_date, b.budget_description
+        SELECT b.id, b.budget_name, b.budget_amount, b.budget_occurence, b.budget_status, b.budget_reminder_status, b.budget_expire_date, b.budget_created_at, b.budget_description
         FROM budget AS b
         WHERE b.budget_user_id = $userId;
     ";

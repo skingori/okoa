@@ -11,9 +11,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addBudget'])) {
         $budgetStatus = $_POST['budget_status'];
         $budgetReminderStatus = $_POST['budget_reminder_status'];
         $budgetExpireDate = $_POST['budget_expire_date'];
+        $budgetCreatedAt = $_POST['budget_created_at'];
         $budgetDescription = $_POST['budget_description'];
 
-        $insert = $con->query("INSERT INTO budget (budget_user_id, budget_name, budget_amount, budget_occurence, budget_status, budget_reminder_status, budget_expire_date, budget_description) VALUES ('$budget_user_id', '$budgetName', '$budgetAmount', '$budgetOccurence', '$budgetStatus', '$budgetReminderStatus', '$budgetExpireDate', '$budgetDescription')");
+        $insert = $con->query("INSERT INTO budget (budget_user_id, budget_name, budget_amount, budget_occurence, budget_status, budget_reminder_status, budget_expire_date, budget_description, budget_created_at) VALUES ('$budget_user_id', '$budgetName', '$budgetAmount', '$budgetOccurence', '$budgetStatus', '$budgetReminderStatus', '$budgetExpireDate', '$budgetDescription', '$budgetCreatedAt')");
 
         if ($insert) {
             $_SESSION['message'] = "Budget added successfully";
@@ -32,6 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addBudget'])) {
     $budgetStatus = $_POST['budget_status'];
     $budgetReminderStatus = $_POST['budget_reminder_status'];
     $budgetExpireDate = $_POST['budget_expire_date'];
+    $budgetCreatedAt = $_POST['budget_created_at'];
     $budgetDescription = $_POST['budget_description'];
 
 

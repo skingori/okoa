@@ -22,35 +22,55 @@ $categories = $con->query("SELECT category_name FROM categories")->fetchAll(PDO:
 
 $totalExpenses = $con->query("SELECT SUM(expense_amount) FROM expenses WHERE expense_user_id = $userId")->fetchColumn() ?? 0;
 $totalBudget = $con->query("SELECT SUM(budget_amount) FROM budget")->fetchColumn();
-$totalCategoriesEstimatedAmount = $con->query("SELECT SUM(category_estimated_amount) FROM categories")->fetchColumn();
-$annualCategoriesEstimatedAmount = $con->query("SELECT SUM(category_estimated_amount) FROM categories WHERE YEAR(created_at) = YEAR(CURRENT_DATE())")->fetchColumn();
+$totalCategoriesEstimatedAmount = $con->query("SELECT SUM(category_estimated_amount) FROM categories WHERE category_user_id = $userId")->fetchColumn() ?? 0;
+$annualCategoriesEstimatedAmount = $con->query("SELECT SUM(category_estimated_amount) FROM categories WHERE YEAR(created_at) = YEAR(CURRENT_DATE()) AND category_user_id = $userId")->fetchColumn() ?? 0;
 
 // Get the expenses for each month of the current year, if the month has no expenses, set the value to 0
 
 $expenses = [
-    'January' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 1")->fetchColumn()?? 0,
-    'February' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 2")->fetchColumn() ?? 0,
-    'March' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 3")->fetchColumn() ?? 0,
-    'April' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 4")->fetchColumn() ?? 0,
-    'May' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 5")->fetchColumn() ?? 0,
-    'June' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 6")->fetchColumn() ?? 0,
-    'July' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 7")->fetchColumn() ?? 0,
-    'August' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 8")->fetchColumn() ?? 0,
-    'September' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 9")->fetchColumn() ?? 0,
-    'October' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 10")->fetchColumn() ?? 0,
-    'November' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 11")->fetchColumn() ?? 0,
-    'December' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 12")->fetchColumn() ?? 0,
+    'January' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 1 AND expense_user_id = $userId")->fetchColumn() ?? 0,
+    'February' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 2 AND expense_user_id = $userId")->fetchColumn() ?? 0,
+    'March' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 3 AND expense_user_id = $userId")->fetchColumn() ?? 0,
+    'April' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 4 AND expense_user_id = $userId")->fetchColumn() ?? 0,
+    'May' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 5 AND expense_user_id = $userId")->fetchColumn() ?? 0,
+    'June' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 6 AND expense_user_id = $userId")->fetchColumn() ?? 0,
+    'July' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 7 AND expense_user_id = $userId")->fetchColumn() ?? 0,
+    'August' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 8 AND expense_user_id = $userId")->fetchColumn() ?? 0,
+    'September' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 9 AND expense_user_id = $userId")->fetchColumn() ?? 0,
+    'October' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 10 AND expense_user_id = $userId")->fetchColumn() ?? 0,
+    'November' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 11 AND expense_user_id = $userId")->fetchColumn() ?? 0,
+    'December' => $con->query("SELECT SUM(expense_amount) FROM expenses WHERE MONTH(expense_created_at) = 12 AND expense_user_id = $userId")->fetchColumn() ?? 0,
 ];
 
 include('header.php');
 ?>
 
 <!-- Page Heading -->
-<!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h3 class="h5 mb-0 text-gray-800">Okoa Home</h5>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-                    </div> -->
-<!-- <h1 class="h3 mb-4 text-gray-800">Blank Page</h1> -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h5 mb-0 text-gray-800"><i class="fa fa-home"></i><span class="mr-2 d-none d-lg-inline text-gray-600 small">
+            <?php
+            if (isset($_SESSION['name'])) {
+                $hour = date('H') + 3;
+                if ($hour < 12) {
+                    echo "Good Morning," . " " . $_SESSION['name'];
+                } else if ($hour < 17) {
+                    echo "Good Afternoon," . " " . $_SESSION['name'];
+                } else {
+                    echo "Good Evening," . " " . $_SESSION['name'];
+                }
+            } else {
+                echo "Welcome";
+            }
+            ?>
+        </span></h1>
+    <!-- <a href="report.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
+
+    <div class="btn-group" role="group" aria-label="Test">
+        <a href="addExpense.php" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-plus"></i></a>
+        <a href="report.php" class="btn btn-success btn-circle btn-sm"><i class="fas fa-print"></i></a>
+    </div>
+</div>
 
 <!-- Content Row -->
 <div class="row">
@@ -158,7 +178,7 @@ include('header.php');
                             <div class="col">
                                 <div class="progress progress-sm mr-2">
                                     <?php
-                                    
+
                                     if (!$monthlyBudget == 0 && !$monthlyExpenses == 0) {
                                         $percentage = ($monthlyExpenses / $monthlyBudget) * 100;
                                         if ($percentage <= 50) {
@@ -294,125 +314,125 @@ include('header.php');
             cutoutPercentage: 80,
         },
     });
-// AREA CHART
-// Set new default font family and font color to mimic Bootstrap's default styling
-Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#858796';
+    // AREA CHART
+    // Set new default font family and font color to mimic Bootstrap's default styling
+    Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor = '#858796';
 
-function number_format(number, decimals, dec_point, thousands_sep) {
-  // *     example: number_format(1234.56, 2, ',', ' ');
-  // *     return: '1 234,56'
-  number = (number + '').replace(',', '').replace(' ', '');
-  var n = !isFinite(+number) ? 0 : +number,
-    prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-    sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-    dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-    s = '',
-    toFixedFix = function(n, prec) {
-      var k = Math.pow(10, prec);
-      return '' + Math.round(n * k) / k;
-    };
-  // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-  s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-  if (s[0].length > 3) {
-    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-  }
-  if ((s[1] || '').length < prec) {
-    s[1] = s[1] || '';
-    s[1] += new Array(prec - s[1].length + 1).join('0');
-  }
-  return s.join(dec);
-}
-
-// Area Chart Example
-var ctx = document.getElementById("myAreaChart");
-var myLineChart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: [{
-      label: "Expenses",
-      lineTension: 0.3,
-      backgroundColor: "rgba(78, 115, 223, 0.05)",
-      borderColor: "rgba(78, 115, 223, 1)",
-      pointRadius: 3,
-      pointBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointBorderColor: "rgba(78, 115, 223, 1)",
-      pointHoverRadius: 3,
-      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-      pointHitRadius: 10,
-      pointBorderWidth: 2,
-      data: [<?php echo $expenses['January']; ?>, <?php echo $expenses['February']; ?>, <?php echo $expenses['March']; ?>, <?php echo $expenses['April']; ?>, <?php echo $expenses['May']; ?>, <?php echo $expenses['June']; ?>, <?php echo $expenses['July']; ?>, <?php echo $expenses['August']; ?>, <?php echo $expenses['September']; ?>, <?php echo $expenses['October']; ?>, <?php echo $expenses['November']; ?>, <?php echo $expenses['December']; ?>],
-    }],
-  },
-  options: {
-    maintainAspectRatio: false,
-    layout: {
-      padding: {
-        left: 10,
-        right: 25,
-        top: 25,
-        bottom: 0
-      }
-    },
-    scales: {
-      xAxes: [{
-        time: {
-          unit: 'date'
-        },
-        gridLines: {
-          display: false,
-          drawBorder: false
-        },
-        ticks: {
-          maxTicksLimit: 7
+    function number_format(number, decimals, dec_point, thousands_sep) {
+        // *     example: number_format(1234.56, 2, ',', ' ');
+        // *     return: '1 234,56'
+        number = (number + '').replace(',', '').replace(' ', '');
+        var n = !isFinite(+number) ? 0 : +number,
+            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+            sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+            dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+            s = '',
+            toFixedFix = function(n, prec) {
+                var k = Math.pow(10, prec);
+                return '' + Math.round(n * k) / k;
+            };
+        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+        s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+        if (s[0].length > 3) {
+            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
         }
-      }],
-      yAxes: [{
-        ticks: {
-          maxTicksLimit: 5,
-          padding: 10,
-          // Include a dollar sign in the ticks
-          callback: function(value, index, values) {
-            return 'KES' + number_format(value);
-          }
-        },
-        gridLines: {
-          color: "rgb(234, 236, 244)",
-          zeroLineColor: "rgb(234, 236, 244)",
-          drawBorder: false,
-          borderDash: [2],
-          zeroLineBorderDash: [2]
+        if ((s[1] || '').length < prec) {
+            s[1] = s[1] || '';
+            s[1] += new Array(prec - s[1].length + 1).join('0');
         }
-      }],
-    },
-    legend: {
-      display: false
-    },
-    tooltips: {
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      titleMarginBottom: 10,
-      titleFontColor: '#6e707e',
-      titleFontSize: 14,
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      intersect: false,
-      mode: 'index',
-      caretPadding: 10,
-      callbacks: {
-        label: function(tooltipItem, chart) {
-          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': KES' + number_format(tooltipItem.yLabel);
-        }
-      }
+        return s.join(dec);
     }
-  }
-});
+
+    // Area Chart Example
+    var ctx = document.getElementById("myAreaChart");
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [{
+                label: "Expenses",
+                lineTension: 0.3,
+                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                borderColor: "rgba(78, 115, 223, 1)",
+                pointRadius: 3,
+                pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointBorderColor: "rgba(78, 115, 223, 1)",
+                pointHoverRadius: 3,
+                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                pointHitRadius: 10,
+                pointBorderWidth: 2,
+                data: [<?php echo $expenses['January']; ?>, <?php echo $expenses['February']; ?>, <?php echo $expenses['March']; ?>, <?php echo $expenses['April']; ?>, <?php echo $expenses['May']; ?>, <?php echo $expenses['June']; ?>, <?php echo $expenses['July']; ?>, <?php echo $expenses['August']; ?>, <?php echo $expenses['September']; ?>, <?php echo $expenses['October']; ?>, <?php echo $expenses['November']; ?>, <?php echo $expenses['December']; ?>],
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 25,
+                    top: 25,
+                    bottom: 0
+                }
+            },
+            scales: {
+                xAxes: [{
+                    time: {
+                        unit: 'date'
+                    },
+                    gridLines: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    ticks: {
+                        maxTicksLimit: 7
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        maxTicksLimit: 5,
+                        padding: 10,
+                        // Include a dollar sign in the ticks
+                        callback: function(value, index, values) {
+                            return 'KES' + number_format(value);
+                        }
+                    },
+                    gridLines: {
+                        color: "rgb(234, 236, 244)",
+                        zeroLineColor: "rgb(234, 236, 244)",
+                        drawBorder: false,
+                        borderDash: [2],
+                        zeroLineBorderDash: [2]
+                    }
+                }],
+            },
+            legend: {
+                display: false
+            },
+            tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                titleMarginBottom: 10,
+                titleFontColor: '#6e707e',
+                titleFontSize: 14,
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                intersect: false,
+                mode: 'index',
+                caretPadding: 10,
+                callbacks: {
+                    label: function(tooltipItem, chart) {
+                        var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                        return datasetLabel + ': KES' + number_format(tooltipItem.yLabel);
+                    }
+                }
+            }
+        }
+    });
 </script>
 <?php
 // include('pieChart.php');

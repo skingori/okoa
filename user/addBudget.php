@@ -46,7 +46,7 @@ include('header.php');
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-sm-4 mb-3 mb-sm-0">
+                <div class="col-sm-5 mb-3 mb-sm-0">
                     <select class="form-control custom-select" name="budget_status" id="budget_status" required>
                         <option value="">Budget Status</option>
                         <?php
@@ -56,7 +56,7 @@ include('header.php');
                         ?>
                     </select>
                 </div>
-                <div class="col-sm-4 mb-3 mb-sm-0">
+                <div class="col-sm-7 mb-3 mb-sm-0">
                     <select class="form-control custom-select" name="budget_reminder_status" id="budget_reminder_status" required>
                         <option value="">Reminder Status</option>
                         <?php
@@ -66,14 +66,21 @@ include('header.php');
                         ?>
                     </select>
                 </div>
-                <div class="input-group col-sm-4">
-                    <div class="input-group-text" id="budget_expire_date">Expiry date</div>
+            </div>
+            <div class="form-group row">
+                <div class="input-group col-sm-6">
+                    <div class="input-group-text form-control" id="budget_expire_date">Expiry date</div>
                     <input type="date" class="form-control" name="budget_expire_date" id="budget_expire_date" placeholder="Budget Expiry Date" value="<?php echo $reminderDate ?>" required>
+                </div>
+                <!-- Date created -->
+                <div class="input-group col-sm-6">
+                    <div class="input-group-text form-control" id="budget_created_at">Dated at?</div>
+                    <input type="date" class="form-control" name="budget_created_at" id="budget_created_at" placeholder="Budget Created Date" required>
                 </div>
             </div>
             <div class="form-group">
                 <!-- Description -->
-                <textarea class="form-control" name="budget_description" id="budget_description" placeholder="Description" required></textarea>
+                <textarea class="form-control" name="budget_description" id="budget_description" placeholder="Description" required>N/A</textarea>
             </div>
 
             <button type="submit" name="addBudget" class="btn btn-success">New Budget</button>

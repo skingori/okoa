@@ -39,7 +39,7 @@ CREATE TABLE budget(
     budget_reminder_status ENUM('active', 'inactive') NOT NULL,
     budget_expire_date DATE NULL,
     budget_description TEXT NULL,
-    budget_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    budget_created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(budget_user_id) REFERENCES users(id) ON DELETE CASCADE
 );
@@ -55,7 +55,7 @@ CREATE TABLE categories(
     category_status ENUM('active', 'inactive') NOT NULL,
     reminder_date DATE NULL,
     category_description TEXT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(category_user_id) REFERENCES users(id) ON DELETE CASCADE,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -71,7 +71,7 @@ CREATE TABLE expenses(
     expense_category_name VARCHAR(100) DEFAULT NULL,
     expense_budget_id INT NOT NULL,
     expense_description TEXT NOT NULL,
-    expense_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expense_created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(expense_user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY(expense_budget_id) REFERENCES budget(id) ON DELETE CASCADE

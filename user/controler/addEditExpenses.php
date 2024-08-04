@@ -10,9 +10,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addExpense'])) {
         $expenseAmount = $_POST['expense_amount'];
         $expenseCategory = $_POST['expense_category'];
         $expenseBudget = $_POST['budget_id'];
+        $expenseCreatedAt = $_POST['expense_created_at'];
         $expenseDescription = $_POST['expense_description'];
 
-        $insert = $con->query("INSERT INTO expenses (expense_user_id, expense_name, expense_amount, expense_category_name, expense_budget_id, expense_description) VALUES ('$expense_user_id', '$expenseName', '$expenseAmount', '$expenseCategory', '$expenseBudget', '$expenseDescription')");
+        $insert = $con->query("INSERT INTO expenses (expense_user_id, expense_name, expense_amount, expense_category_name, expense_budget_id, expense_description, expense_created_at) VALUES ('$expense_user_id', '$expenseName', '$expenseAmount', '$expenseCategory', '$expenseBudget', '$expenseDescription', '$expenseCreatedAt')");
 
         if ($insert) {
             $_SESSION['message'] = "Expense added successfully";
